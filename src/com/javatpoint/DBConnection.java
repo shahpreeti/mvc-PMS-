@@ -144,11 +144,12 @@ public String[][] getConnection(String sql,String[][] paramSql)
 	       for (int i=0;i<paramSql.length;i++)
 	       {
 	    	   String caseParam = paramSql[i][0];
+	    	   String valueParam = paramSql[i][1];
 	    	   switch (caseParam)
 	    	   {
-	    	   case "String":stmt.setString(i+1,paramSql[i][1]);break;
-	    	   case "int":stmt.setInt(i,Integer.parseInt(paramSql[i][1]));break;
-	    	   default: stmt.setInt(i,Integer.parseInt(paramSql[i][1]));break;
+	    	   case "String":stmt.setString(i+1,valueParam);break;
+	    	   case "int":stmt.setInt(i,Integer.parseInt(valueParam));break;
+	    	   default: stmt.setInt(i,Integer.parseInt(valueParam));break;
 	    	   }
 	       }
 	       rs=stmt.executeQuery(); 
@@ -176,7 +177,7 @@ public String[][] getConnection(String sql,String[][] paramSql)
 	       while(rs.next())
 	    	   {
 	    	   	   j=0;
-	    		   while(j<col)
+	    		   while(j<col+1)
 	   				{
 	   					if(resultCol[j][1]==1)
 	   						result[i][j]=rs.getString(j+1);

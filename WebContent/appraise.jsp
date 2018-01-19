@@ -1,5 +1,7 @@
 <html>
+
 <%@page import="com.javatpoint.AppraiseBean"%>
+
 <style type="text/css">
   <%@include file="WEB-INF/styles/mystyle1.css" %>
   <%@include file="WEB-INF/styles/RatingStyle.css" %>
@@ -19,49 +21,64 @@
 out.print("Welcome to self appraisal ");
 out.print(session.getAttribute("name"));
 
-AppraiseBean bean=(AppraiseBean)request.getAttribute("bean");
-String[] ar=bean.getSections();
-int len=ar.length;
+AppraiseBean abean=(AppraiseBean)request.getAttribute("abean");
+String[] secname=abean.getSections(session.getAttribute("name").toString());
+int len=secname.length;
 int i=0,j=0,k=0;
 %>
 <div class="tab">
 <%for(i=0;i<len;i++)
   {%>
-		<button id="<%=ar[i]%>" class="tablinks" onclick="loadForm('<%=i%>')" ><%=ar[i] %></button>
+		<button id="<%=secname[i]%>" class="tablinks" onclick="loadForm('<%=i%>')" ><%=secname[i] %></button>
   <%}%>
 
 </div>
 
  <br>
 <%for(j=0;j<len;j++)
-{%>
+{
+%>
 	<div class="formsection" id="formsection<%=j%>" >
 	<%
-		String[][] sectionform=bean.getForms(j);
+		String[][] sectionform=abean.getForms(session.getAttribute("name").toString(),j);
 		int slen=sectionform.length;
 		%><label>displaying section<%=j+1 %></label><br><%
-		for(int t=0;t<sectionform.length;t++)
+		if(sectionform[0][9].equals("Y"))
 		{
-			String idtext="t"+j+t;
-			String c1=sectionform[t][5];
-			String c2=sectionform[t][6];
-			String c3=sectionform[t][7];
+			for(int t=0;t<sectionform.length;t++)
+			{
 			
-		%><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label>
-	  	<textarea rows="4" cols="40" id="<%=idtext%>" onfocus="loadCriteria('<%=c1%>','<%=c2%>','<%=c3%>')"><%=sectionform[t][3] %></textarea>
-	  	<%
-		for(int s=1;s<=5;s++)
-		{ 
-			String idrate="rate"+j+t;
-			String idbutton="b"+s+idrate;
-		
+				String idtext="t"+j+t;
+				String c1=sectionform[t][5];
+				String c2=sectionform[t][6];
+				String c3=sectionform[t][7];				
+				%><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label>
+			  	<textarea rows="4" cols="40" id="<%=idtext%>" onfocus="loadCriteria('<%=c1%>','<%=c2%>','<%=c3%>')"><%=sectionform[t][3] %></textarea>
+			  	<%
+				for(int s=1;s<=5;s++)
+				{ 
+					String idrate="rate"+j+t;
+					String idbutton="b"+s+idrate;
+					%>					
+				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>)"><img src="starUnfilled.png" ></button>
+				<%}%>
+			  	<label id="rate<%=j%><%=t%>" ><%=sectionform[t][4] %></label>
+			  	<br>
+				<%
+			}
+		}
+		else
+			{
+				for(int t=0;t<sectionform.length;t++)
+				{
+					String idtext="t"+j+t;
+					%><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label><br><br>
+			  		<textarea rows="5" cols="100" id="<%=idtext%>"><%=sectionform[t][3] %></textarea>
+					<br><br>
+			  	<%
+				}
+			}
 		%>
-		
-	  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>)"><img src="starUnfilled.png" ></button>
-	  	<%}%>
-	  	<label id="rate<%=j%><%=t%>" ><%=sectionform[t][4] %></label>
-	  	<br>
-		<%}%>
 	</div>
 <%} %>
 

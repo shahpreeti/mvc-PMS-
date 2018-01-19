@@ -24,12 +24,12 @@ public class AppraiseServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
-		
+		//use this for getSections() as input para
 		//String name=request.getParameter("name");
 		
-		AppraiseBean bean=new AppraiseBean();
-		bean.setQuery();
-		request.setAttribute("bean",bean);
+		AppraiseBean abean=new AppraiseBean();
+		abean.setQuery();
+		request.setAttribute("abean",abean);
 		RequestDispatcher rd=request.getRequestDispatcher("appraise.jsp");
 		rd.forward(request, response);
 		}
