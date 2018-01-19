@@ -3,23 +3,31 @@
 <style type="text/css">
   <%@include file="WEB-INF/styles/mystyle1.css" %>
 </style>
+
+<%
+
+LoginBean2 bean=(LoginBean2)request.getAttribute("bean");
+session.setAttribute("name", bean.getName());
+
+String user=session.getAttribute("name").toString();
+
+%>
 <div id="div2">
 <p id="company">third(i)</p>
-<p id="slogan">Information. Intelligence. Insight.</p>
+<p id="slogan">Information. Intelligence. Insight. </p>
+
+<button id="logout" style="float:right" onclick="sessionOut('<%=user%>')">Logout</button> 
 </div><br><br>
 <div>
 <p id ="pms">Performance Management System</p>
 </div>
 
-<p>You are successfully logged in!</p>
+<%out.println("this is your home page "+user); %>
+<div id="test"></div>
+<p>You are successfully logged in! </p>
 
-<%
 
-LoginBean2 bean=(LoginBean2)request.getAttribute("bean");
-out.print("Welcome to Third(i) PMS, "+bean.getName());
-session.setAttribute("name", bean.getName());
-out.println(session.getAttribute("name"));
-%>
+
 <br>
 <br>
 <ul>
@@ -37,7 +45,17 @@ out.println(session.getAttribute("name"));
            
 </ul>
                 
-                
+<script type="text/javascript">
+function sessionOut(user)
+{
+	
+	//var username=user;
+	document.getElementById("test").innerHTML=user+"  manual";
+	window.location = "index.jsp";
+	
+	
+}
+</script>               
                 
                 
                 
