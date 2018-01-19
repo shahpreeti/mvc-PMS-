@@ -1,5 +1,5 @@
 <html>
- 
+
 <%@page import="com.javatpoint.AppraiseBean"%>
 
 <style type="text/css">
