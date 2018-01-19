@@ -4,14 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.*;
-
 import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginBean2 {  
 private String name,password;
-Map<String,String> menu_item=new HashMap<String,String>(); 
+String[][] menu=new String[10][2];
 String  connectionUrl="jdbc:sqlserver://thirdiportal:1433;" +  
         "databaseName=HRMS;user=sa;password=Admin123";
 
@@ -93,10 +90,11 @@ public static boolean checkPassword(String password_plaintext, String stored_has
 
 	return(password_verified);
 }
-public Map<String,String> getMenu_item() {
-	return menu_item;
+public String[][] getMenu() {
+	return menu;
 }
-public void setMenu_item(String name) {
+public void setMenu(String name) {
+	int i=0;
 	String SQL="select module_name, sub_module_name,link \r\n" + 
 			"from appr_module \r\n" + 
 			"     inner join  appr_sub_module on appr_module.module_id=appr_sub_module.module_id \r\n" + 
@@ -111,9 +109,11 @@ public void setMenu_item(String name) {
 	       stmt.setString(1,name);  
 	       rs=stmt.executeQuery();
 	       while (rs.next()) {   
-		       menu_item.put(rs.getString(2), rs.getString(3));     
+		       menu[i][0]=rs.getString(2);
+		       menu[i][1]=rs.getString(3);
+		       i++;
 		         }   
-	       System.out.println(menu_item);
+	       
 	    }
 		      // Handle any errors that may have occurred.  
 		      catch (Exception e) {  
@@ -124,5 +124,6 @@ public void setMenu_item(String name) {
 		         if (stmt != null) try { stmt.close(); } catch(Exception e) {}  
 		         if (con != null) try { con.close(); } catch(Exception e) {}  
 		      }  	
+
 }
 }  

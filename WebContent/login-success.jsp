@@ -12,6 +12,7 @@
 </div>
 
 <p>You are successfully logged in!</p>
+
 <%
 
 LoginBean2 bean=(LoginBean2)request.getAttribute("bean");
@@ -19,16 +20,21 @@ out.print("Welcome to Third(i) PMS, "+bean.getName());
 session.setAttribute("name", bean.getName());
 out.println(session.getAttribute("name"));
 %>
+<br>
+<br>
 <ul>
-       <% Map<String,String> menu=bean.getMenu_item();
-        Iterator<Map.Entry<String,String>> itr=menu.entrySet().iterator();
-       	while(itr.hasNext())
-        {
-           	Map.Entry<String, String> entry = itr.next();
-           	System.out.println(entry.getKey()+" "+entry.getValue());
-        %>
- 		<li><a href="AppraiseServlet"><%=entry.getKey() %></a></li>
-        <%}%> 
+       <% 
+       String[][] menu1=bean.getMenu();
+       for(int i=0;i<10;i++)
+       {
+    	   if(menu1[i][0]!=null)
+    	   {
+    	   %>
+    		<li><a href=<%=menu1[i][1] %>><%=menu1[i][0] %></a></li>
+           <%
+           }
+    	}%> 
+           
 </ul>
                 
                 

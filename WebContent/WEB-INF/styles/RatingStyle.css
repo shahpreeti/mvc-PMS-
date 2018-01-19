@@ -64,3 +64,9 @@ span + input[type=radio] + label, legend + input[type=radio] + label {
 .rating input[type=radio][name=stars]:required + label.stars:after {
     content: counter(checkbox) " stars!";
 }
+.ratebutton
+{
+	margin-right:-4px;
+	border: none;
+	background-color: white;
+}

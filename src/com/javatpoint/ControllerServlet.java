@@ -22,7 +22,7 @@ public class ControllerServlet extends HttpServlet {
 		bean.setName(name);
 		bean.setPassword(password);
 		boolean status=bean.validate();
-		bean.setMenu_item(name);
+		bean.setMenu(name);
 		request.setAttribute("bean",bean);
 		if(status){
 		
