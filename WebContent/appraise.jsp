@@ -65,9 +65,7 @@ int i=0,j=0,k=0;
 	</div>
 <%} %>
 
-
 <div id ="formsections">
-
 </div>
 <div id="indicator">
 <table>
@@ -95,61 +93,7 @@ int i=0,j=0,k=0;
 </tr>
 </table>
 </div>
-welcome
-<script>
-
-document.getElementById("Section Name1").style.backgroundColor = "#ddd";
-
-function countRate(r_id,star)
-{
-	
-	var labelid=document.getElementById(r_id.id);
-	document.getElementById(labelid.id).innerHTML=star;
-	
-	for(var i=1;i<=star;i++)
-		{	var b_id="b"+i+labelid.id;
-			document.getElementById(b_id).innerHTML ='<img src="star.png" />'; 
-		
-		}
-	for(var i=5;i>star;i--)
-	{	var b_id="b"+i+labelid.id;
-		document.getElementById(b_id).innerHTML ='<img src="starUnfilled.png" />'; 
-	
-	}
-	
-}
-
-function loadForm(section)
-{
-	var s="formsection"+section;	
-	var elements = document.getElementsByClassName("formsection");
-    for(var i = 0, length = elements.length; i < length; i++) {
-      if(elements[i].id==s)
-          elements[i].style.display = 'block';
-      else
-    	  elements[i].style.display = 'none';
-      
-    }
-      var elements1 = document.getElementsByClassName("tablinks");
-      var num=Number(section)+1;
-      for(var i = 0, length = elements1.length; i < length; i++) {
-    	
-          if(elements1[i].id=="Section Name"+num)
-              elements1[i].style.backgroundColor = "#ddd";
-          else
-        	  elements1[i].style.backgroundColor = "#f1f1f1";
-          }	
-}
-function loadCriteria(c1,c2,c3)
-{
-	document.getElementById("l1").innerHTML =c1;
-	document.getElementById("l2").innerHTML =c2;
-	document.getElementById("l3").innerHTML =c3;
-	
-
-}
-</script>
+<script type="text/javascript" src="scriptappraise.js"></script>
 
 </body>
-
 </html>
