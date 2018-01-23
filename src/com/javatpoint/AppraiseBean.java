@@ -23,10 +23,7 @@ public class AppraiseBean {
 }
 	public String[] getSections(String user)
 	{
-		paramSql=new String[1][2];
-		paramSql[0][0]="String";
-		paramSql[0][1]=user;
-		rs=db.getConnection(sql1, paramSql);
+		this.getAllForms(user);
 		row=rs.length;
 		col=rs[0].length;
 		for(int i=0;i<row;i++)
@@ -75,6 +72,14 @@ public class AppraiseBean {
 		paramSql[1][1]=result[section];
 		section_form=db.getConnection(sql2, paramSql);
 		return section_form;
+	}
+	public String[][] getAllForms(String user)
+	{
+		paramSql=new String[1][2];
+		paramSql[0][0]="String";
+		paramSql[0][1]=user;
+		rs=db.getConnection(sql1, paramSql);
+		return rs;
 	}
 }
 

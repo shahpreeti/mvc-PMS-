@@ -62,15 +62,17 @@ int i=0,j=0,k=0;
 				<td><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label></td>
 				<td><textarea rows="4" cols="40" id="<%=idtext%>" onfocus="loadCriteria('<%=c1%>','<%=c2%>','<%=c3%>')" name="<%=idtext%>"><%=sectionform[t][3] %></textarea></td>
 			  	<td>
-			  	<%
+			  	<%String idtb="tr"+j+t;
 				for(int s=1;s<=5;s++)
 				{ 
 					String idrate="rate"+j+t;
+					
 					String idbutton="b"+s+idrate;
 					%>					
-				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>)"><img src="starUnfilled.png" ></button>
+				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>,<%=idtb%>)"><img src="starUnfilled.png" ></button>
 				<%}%>
-			  	<label id="rate<%=j%><%=t%>" ><%=sectionform[t][4] %></label>
+			  	<label id="rate<%=j%><%=t%>"><%=sectionform[t][4] %></label>
+				<input type="hidden" id="<%=idtb %>" name="<%=idtb %>" readonly>
 			  	</td></tr>
 			  	
 				<%
@@ -83,7 +85,7 @@ int i=0,j=0,k=0;
 				{
 					String idtext="t"+j+t;
 					%><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label><br><br>
-			  		<textarea rows="5" cols="100" id="<%=idtext%>"><%=sectionform[t][3] %></textarea>
+			  		<textarea rows="5" cols="100" id="<%=idtext%>" name="<%=idtext%>"><%=sectionform[t][3] %></textarea>
 					<br><br>
 			  	<%
 				}
@@ -116,11 +118,13 @@ int i=0,j=0,k=0;
 <script type="text/javascript" >
 document.getElementById("Section Name0").style.backgroundColor = "#ddd";
 
-function countRate(r_id,star)
+function countRate(r_id,star,trid)
 {
 	
 	var labelid=document.getElementById(r_id.id);
+	var tr_id=document.getElementById(trid.id);
 	document.getElementById(labelid.id).innerHTML=star;
+	document.getElementById(tr_id.id).value=star;
 	
 	for(var i=1;i<=star;i++)
 		{	var b_id="b"+i+labelid.id;
