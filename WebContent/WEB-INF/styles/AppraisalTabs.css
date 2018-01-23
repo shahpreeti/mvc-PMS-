@@ -43,4 +43,11 @@
 {
 	margin-left: 150px;
     margin-right: 200px;	
+   display:none;
+}
+#submission
+{
+	text-align: center;
+	display:none;
+	
 }

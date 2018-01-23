@@ -2,6 +2,8 @@
 <style type="text/css">
   <%@include file="WEB-INF/styles/mystyle1.css" %>
 </style>
+
+<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
 <form action="ControllerServlet" method="post">
 <div id="div2">
 <p id="company">third(i)</p>
@@ -11,7 +13,7 @@
 <p id ="pms">Performance Management System</p>
 </div>
 <div id="div3"></div>
- 
+
 <div id="div1">
 <p>Login with us</p>
 <table>
@@ -30,6 +32,12 @@
 </tr>
 </table>
 </div>
-<%session.setAttribute("name","wronguser");%>
 </form>
-
+</body>
+ <script>
+window.history.forward();
+function noBack()
+{
+    window.history.forward();
+}
+</script>

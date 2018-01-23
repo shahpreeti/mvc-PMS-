@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class AppraiseServlet
@@ -27,16 +28,26 @@ public class AppraiseServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		//use this for getSections() as input para
 		//String name=request.getParameter("name");
-		
-		AppraiseBean abean=new AppraiseBean();
-		abean.setQuery();
-		request.setAttribute("abean",abean);
-		RequestDispatcher rd=request.getRequestDispatcher("appraise.jsp");
-		rd.forward(request, response);
+		HttpSession session=request.getSession(false);  
+        if(session!=null)
+        {  
+        	if(session.getAttribute("name")!=null)
+        	{
+        	String name=(String)session.getAttribute("name");  
+	        
+			AppraiseBean abean=new AppraiseBean();
+			abean.setQuery();
+			request.setAttribute("abean",abean);
+			RequestDispatcher rd=request.getRequestDispatcher("appraise.jsp");
+			rd.forward(request, response);
+        	}
+        	else request.getRequestDispatcher("index.jsp").forward(request, response);  
 		}
+        else
+        {
+        	out.print("Please login first");  
+            request.getRequestDispatcher("index.jsp").forward(request, response);  
+        }
+        out.close();
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	
+}

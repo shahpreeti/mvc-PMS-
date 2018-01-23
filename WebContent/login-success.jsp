@@ -1,33 +1,15 @@
 <%@page import="com.javatpoint.LoginBean2"%>
 <%@page import="java.util.*"%>
-
+<%@ include file="design-page.jsp" %>
 <style type="text/css">
-  <%@include file="WEB-INF/styles/mystyle1.css" %>
+<%@include file="WEB-INF/styles/mystyle1.css" %>
 </style>
 
+<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
 <%
 
 LoginBean2 bean=(LoginBean2)request.getAttribute("bean");
-session.setAttribute("name", bean.getName());
-
-String user=session.getAttribute("name").toString();
-
-%>
-<div id="div2">
-<p id="company">third(i)</p>
-<p id="slogan">Information. Intelligence. Insight. </p>
-
-<button id="logout" style="float:right" onclick="sessionOut('<%=user%>')">Logout</button> 
-</div><br><br>
-<div>
-<p id ="pms">Performance Management System</p>
-</div>
-
-<%out.println("this is your home page "+user); %>
-<div id="test"></div>
-<p>You are successfully logged in! </p>
-
-
+out.print(session.getAttribute("name"));%>
 
 <br>
 <br>
@@ -45,24 +27,14 @@ String user=session.getAttribute("name").toString();
     	}%> 
            
 </ul>
-                
-<script type="text/javascript">
-function sessionOut(user)
+</body>    
+<script>
+window.history.forward();
+function noBack()
 {
-	
-	//var username=user;
-	document.getElementById("test").innerHTML=user+"  manual";
-	window.location = "index.jsp";
-	
-	
+    window.history.forward();
 }
-</script>               
-                
-                
-                
-                
-                
-                
+</script>                            
                 
                 
                 

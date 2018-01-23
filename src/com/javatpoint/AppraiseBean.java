@@ -16,24 +16,10 @@ public class AppraiseBean {
 	}
 	public void setQuery()
 	{
-		sql1="select appr_empl.ApprEmpId,Appr_Sections.ApprSectionName Section,Appr_Questions.ApprQuestionName Question,appr_empl_rating.Remarks Remarks,appr_empl_rating.Rating Rating,PerformanceInd1 = 'Prev Ind1',PerformanceInd2 = 'Curr Ind',PerformanceInd3 = 'Next Ind',1 AppraisalStatus,appr_questions.RatingYN " + 
-				" from appr_empl " + 
-				" inner join appr_empl_rating on appr_empl.ApprEmpId=appr_empl_rating.ApprEmpId " + 
-				" inner join appr_questions on appr_empl_rating.ApprQuestionId=Appr_Questions.ApprQuestionID " + 
-				" inner join appr_sections on Appr_Questions.ApprSectionId=Appr_Sections.ApprSectionId " + 
-				" inner join appr_empl_flow on appr_empl_flow.ApprEmpId=appr_empl.ApprEmpID and appr_empl_flow.phaseid=appr_empl_rating.appr_phase_id " + 
-				" inner join ohrm_user on ohrm_user.emp_number=appr_empl_flow.hs_hr_employee_id " + 
-				" where  appr_empl_flow.phaseid=1 and ohrm_user.user_name=? " + 
-				" order by appr_sections.ColOrder,appr_questions.ColOrder";
-		sql2="select appr_empl.ApprEmpId,Appr_Sections.ApprSectionName Section,Appr_Questions.ApprQuestionName Question,appr_empl_rating.Remarks Remarks,appr_empl_rating.Rating Rating,PerformanceInd1 = 'Prev Ind1',PerformanceInd2 = 'Curr Ind',PerformanceInd3 = 'Next Ind',1 AppraisalStatus,appr_questions.RatingYN " + 
-				" from appr_empl " + 
-				" inner join appr_empl_rating on appr_empl.ApprEmpId=appr_empl_rating.ApprEmpId " + 
-				" inner join appr_questions on appr_empl_rating.ApprQuestionId=Appr_Questions.ApprQuestionID " + 
-				" inner join appr_sections on Appr_Questions.ApprSectionId=Appr_Sections.ApprSectionId " + 
-				" inner join appr_empl_flow on appr_empl_flow.ApprEmpId=appr_empl.ApprEmpID and appr_empl_flow.phaseid=appr_empl_rating.appr_phase_id " + 
-				" inner join ohrm_user on ohrm_user.emp_number=appr_empl_flow.hs_hr_employee_id " + 
-				" where  appr_empl_flow.phaseid=1 and ohrm_user.user_name=? and Appr_Sections.ApprSectionName=? " + 
-				" order by appr_sections.ColOrder,appr_questions.ColOrder";
+		sql1="select * from view_getappraisalrecords where user_name=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
+
+		sql2="select * from view_getappraisalrecords where user_name=? and section=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
+
 }
 	public String[] getSections(String user)
 	{

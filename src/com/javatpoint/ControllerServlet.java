@@ -22,20 +22,37 @@ public class ControllerServlet extends HttpServlet {
 		LoginBean2 bean=new LoginBean2();
 		bean.setName(name);
 		bean.setPassword(password);
-		boolean status=bean.validate();
-		bean.setMenu(name);
-		request.setAttribute("bean",bean);
-		if(status){
+		HttpSession session=request.getSession(false);  
+        if(session!=null)
+        {  
+        	request.setAttribute("bean",bean);
+			session.setAttribute("name",name); 
+        	if(session.getAttribute("name")!=null)
+        	{
+			 boolean status=bean.validate();
+			 bean.setMenu(name);
+			 if(status){
+					
+			        RequestDispatcher rd=request.getRequestDispatcher("login-success.jsp");
+					rd.forward(request, response);
+					
+				}
+				else{
+					out.print("error page");
+					RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
+					rd.forward(request, response);
+				}
+        	}
+        	else
+        		response.sendRedirect("index.jsp");
+        	
+        }
+		 else
+		 {
+			 response.sendRedirect("index.jsp");
+		 }
 		
-			RequestDispatcher rd=request.getRequestDispatcher("login-success.jsp");
-			rd.forward(request, response);
-			
-		}
-		else{
-			out.print("error page");
-			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
-			rd.forward(request, response);
-		}
+		
 		
 		
 	}
