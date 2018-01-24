@@ -7,8 +7,9 @@ public class AppraiseBean {
 	String[][] paramSql;
 	String[] result;
 	String sql1=null,sql2=null;
-	int resultCount=0,row=0,col=0;
-	String[][] rs,section_form;
+	int resultCount=0,row=0,col=0,flag=0;
+	String[][] rs;
+	String[][] section_form;
 	public AppraiseBean()
 	{
 		db=new DBConnection();
@@ -23,19 +24,10 @@ public class AppraiseBean {
 }
 	public String[] getSections(String user)
 	{
+		if(flag==0)
 		this.getAllForms(user);
 		row=rs.length;
 		col=rs[0].length;
-		for(int i=0;i<row;i++)
-		{
-			for(int j=0;j<rs[0].length;j++)
-			{
-				System.out.print(rs[i][j]+"\t");
-			}
-			System.out.println();
-		}
-		
-		//
 		String temp="";
 		int count=0;
 		for(int i=0;i<row;i++)
@@ -61,17 +53,34 @@ public class AppraiseBean {
 			}
 		return result;
 	}
-		
-	public String[][] getForms(String user,int section)
+	public String[][] getForm(int section)
 	{
-		paramSql=new String[2][2];
-		
-		paramSql[0][0]="String";
-		paramSql[0][1]=user;
-		paramSql[1][0]="String";
-		paramSql[1][1]=result[section];
-		section_form=db.getConnection(sql2, paramSql);
+		row=rs.length;
+		col=rs[0].length;
+		int size=0;
+		for(int i=0;i<row;i++)
+		{
+			if(rs[i][1].equals(result[section]))
+			{
+				size++;
+			}
+		}
+		section_form=new String[size][col];
+		int indx=0;
+		for(int i=0;i<row;i++)
+		{
+			if(rs[i][1].equals(result[section]))
+			{
+				for(int j=0;j<col;j++)
+				{
+					section_form[indx][j]=rs[i][j];
+					
+				}
+				indx++;
+			}
+		}
 		return section_form;
+		
 	}
 	public String[][] getAllForms(String user)
 	{
@@ -80,6 +89,11 @@ public class AppraiseBean {
 		paramSql[0][1]=user;
 		rs=db.getConnection(sql1, paramSql);
 		return rs;
+	}
+	public void setUpdatedForms(String[][] forms)
+	{
+		rs=forms;
+		flag=1;
 	}
 }
 

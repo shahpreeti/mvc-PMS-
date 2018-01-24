@@ -36,8 +36,10 @@ public class AppraiseServlet extends HttpServlet {
         	String name=(String)session.getAttribute("name");  
 	        
 			AppraiseBean abean=new AppraiseBean();
+			SaveAppraiseBean sbean=new SaveAppraiseBean();
 			abean.setQuery();
 			request.setAttribute("abean",abean);
+			request.setAttribute("sbean",sbean);
 			RequestDispatcher rd=request.getRequestDispatcher("appraise.jsp");
 			rd.forward(request, response);
         	}

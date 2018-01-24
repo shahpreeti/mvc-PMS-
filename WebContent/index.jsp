@@ -28,7 +28,7 @@
 <tr><br></tr>
 <tr>
 <td></td>
-<td><button id="logbutton" input type = "submit" value="login">LOGIN</button></td>
+<td><button id="logbutton"  type = "submit" value="login">LOGIN</button></td>
 </tr>
 </table>
 </div>

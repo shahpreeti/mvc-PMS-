@@ -67,7 +67,6 @@ public void connectDB()
        rs=stmt.executeQuery();
        while (rs.next()) {   
 	            stored_pass=rs.getString(5);
-	            System.out.println(stored_pass);
 	         }    
     }
 	      // Handle any errors that may have occurred.  

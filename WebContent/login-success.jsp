@@ -5,11 +5,14 @@
 <%@include file="WEB-INF/styles/mystyle1.css" %>
 </style>
 
-<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
+
 <%
 
 LoginBean2 bean=(LoginBean2)request.getAttribute("bean");
-out.print(session.getAttribute("name"));%>
+String name=(String) session.getAttribute("name");
+out.print(session.getAttribute("name"));
+bean.setMenu(name);
+%>
 
 <br>
 <br>
@@ -28,13 +31,7 @@ out.print(session.getAttribute("name"));%>
            
 </ul>
 </body>    
-<script>
-window.history.forward();
-function noBack()
-{
-    window.history.forward();
-}
-</script>                            
+                           
                 
                 
                 

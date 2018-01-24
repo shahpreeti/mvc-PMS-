@@ -20,7 +20,6 @@ String[][] result;
 int[][] resultCol;
 public DBConnection()
 {
-	menu_item=new HashMap<String,String>();
 	con = null;  stmt = null;	rs = null;	stored_pass=null;
 	connectionUrl="jdbc:sqlserver://thirdiportal:1433;" +  
 		        "databaseName=HRMS;user=sa;password=Admin123";
@@ -98,38 +97,6 @@ public static boolean checkPassword(String password_plaintext, String stored_has
 	password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
 	return(password_verified);
-}
-public Map<String,String> getMenu_item() {
-	return menu_item;
-}
-public void setMenu_item(String name) {
-	String SQL="select module_name, sub_module_name,link \r\n" + 
-			"from appr_module \r\n" + 
-			"     inner join  appr_sub_module on appr_module.module_id=appr_sub_module.module_id \r\n" + 
-			"     inner join  appr_role_module on appr_role_module.sub_module_id=appr_sub_module.sub_module_id\r\n" + 
-			"     inner join  ohrm_user on ohrm_user.user_role_id=appr_role_module.user_role_id\r\n" + 
-			"     where ohrm_user.user_name=?";
-	try {  
-	       // Establish the connection.  
-	       Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
-	       con = DriverManager.getConnection(connectionUrl); 
-	       stmt=con.prepareStatement(SQL); 
-	       stmt.setString(1,name);  
-	       rs=stmt.executeQuery();
-	       while (rs.next()) {   
-		       menu_item.put(rs.getString(2), rs.getString(3));     
-		         }   
-	       System.out.println(menu_item);
-	    }
-		      // Handle any errors that may have occurred.  
-		      catch (Exception e) {  
-		         e.printStackTrace();  
-		      }  
-		      finally {  
-		         if (rs != null) try { rs.close(); } catch(Exception e) {}  
-		         if (stmt != null) try { stmt.close(); } catch(Exception e) {}  
-		         if (con != null) try { con.close(); } catch(Exception e) {}  
-		      }  	
 }
 public String[][] getConnection(String sql,String[][] paramSql)
 {

@@ -1,19 +1,15 @@
 <html>
-
 <%@page import="com.javatpoint.AppraiseBean"%>
-
+<%@page import="com.javatpoint.SaveAppraiseBean"%>
 <style type="text/css">
   <%@include file="WEB-INF/styles/mystyle1.css" %>
   <%@include file="WEB-INF/styles/RatingStyle.css" %>
   <%@include file="WEB-INF/styles/AppraisalTabs.css" %>
 </style>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 
-<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
-
 <div id="div2">
-<p id="company">third(i)</p>
+<p id="company"><a href="HomePageServlet" style="text-decoration: none; color:white">third(i)</a></p>
 <p id="slogan">Information. Intelligence. Insight.</p>
 <a href="LogoutServlet" style="float:right">Logout</a>
 </div><br><br>
@@ -22,14 +18,19 @@
 </div>
 
 <%
-out.print("Welcome to self appraisal ");
+out.print("Welcome to self appraisal form ");
 out.print(session.getAttribute("name"));
-
+SaveAppraiseBean sbean=(SaveAppraiseBean)request.getAttribute("sbean");
 AppraiseBean abean=(AppraiseBean)request.getAttribute("abean");
 String[] secname=abean.getSections(session.getAttribute("name").toString());
+String[][] allforms=abean.getAllForms(session.getAttribute("name").toString());
 int len=secname.length;
+int totalrows=allforms.length;
 int i=0,j=0,k=0;
+String status=sbean.getAppraiseStatus();
+
 %>
+<div><%=status %></div>
 <div class="tab">
 <%for(i=0;i<len;i++)
   {%>
@@ -44,7 +45,7 @@ int i=0,j=0,k=0;
 %>
 	<div class="formsection" id="formsection<%=j%>" >
 	<%
-		String[][] sectionform=abean.getForms(session.getAttribute("name").toString(),j);
+		String[][] sectionform=abean.getForm(j);
 		int slen=sectionform.length;
 		%><label>displaying section<%=j+1 %></label><br><%
 		if(sectionform[0][9].equals("Y"))
@@ -56,23 +57,33 @@ int i=0,j=0,k=0;
 				String idtext="t"+j+t;
 				String c1=sectionform[t][5];
 				String c2=sectionform[t][6];
-				String c3=sectionform[t][7];				
+				String c3=sectionform[t][7];	
+				
 				%>
 				<tr>
 				<td><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label></td>
-				<td><textarea rows="4" cols="40" id="<%=idtext%>" onfocus="loadCriteria('<%=c1%>','<%=c2%>','<%=c3%>')" name="<%=idtext%>"><%=sectionform[t][3] %></textarea></td>
+				<td><textarea rows="4" cols="40" id="<%=idtext%>" onfocus="loadCriteria()" name="<%=idtext%>"><%=sectionform[t][3] %></textarea></td>
 			  	<td>
 			  	<%String idtb="tr"+j+t;
-				for(int s=1;s<=5;s++)
+			  	String ratestr;
+			  	if(sectionform[t][4].equals(""))
+			  		ratestr="0";
+			  	else
+			  		ratestr=sectionform[t][4];
+			  	int rating=Integer.parseInt(ratestr);
+			  	for(int s=1;s<=5;s++)
 				{ 
+			  		String rateimg;
+			  		if(rating>=s)
+			  		rateimg="star.png";
+			  		else rateimg="starUnfilled.png";
 					String idrate="rate"+j+t;
-					
 					String idbutton="b"+s+idrate;
 					%>					
-				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>,<%=idtb%>)"><img src="starUnfilled.png" ></button>
+				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>,<%=idtb%>)"><img src=<%=rateimg %>></button>
 				<%}%>
 			  	<label id="rate<%=j%><%=t%>"><%=sectionform[t][4] %></label>
-				<input type="hidden" id="<%=idtb %>" name="<%=idtb %>" readonly>
+				<input type="hidden" id="<%=idtb %>" name="<%=idtb %>" value="<%=ratestr %>" readonly>
 			  	</td></tr>
 			  	
 				<%
@@ -168,17 +179,13 @@ function loadForm(section)
       document.getElementById("indicator").style.display='none';
       
 }
-function loadCriteria(c1,c2,c3)
+function loadCriteria()
 {
-	document.getElementById("l1").innerHTML =c1;
-	document.getElementById("l2").innerHTML =c2;
-	document.getElementById("l3").innerHTML =c3;
+	var c1,c2,c3;
+	//document.getElementById("l1").innerHTML =c1;
+	//document.getElementById("l2").innerHTML =c2;
+	//document.getElementById("l3").innerHTML =c3;
 	document.getElementById("indicator").style.display='block';
-}
-window.history.forward();
-function noBack()
-{
-    window.history.forward();
 }
 
 </script>
