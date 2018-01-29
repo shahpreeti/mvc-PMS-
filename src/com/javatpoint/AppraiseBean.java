@@ -10,6 +10,7 @@ public class AppraiseBean {
 	int resultCount=0,row=0,col=0,flag=0;
 	String[][] rs;
 	String[][] section_form;
+	int apprempid,phaseid;
 	public AppraiseBean()
 	{
 		db=new DBConnection();
@@ -17,15 +18,15 @@ public class AppraiseBean {
 	}
 	public void setQuery()
 	{
-		sql1="	select * from view_getappraisalrecords where ApprEmpId=? and phaseid=? order by SectionColOrder, QuestionColOrder";
+		sql1="select * from view_getappraisalrecords where ApprEmpId=? and phaseid=? order by SectionColOrder, QuestionColOrder";
 
 		sql2="select * from view_getappraisalrecords where user_name=? and section=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
 
 }
-	public String[] getSections(int apprempid,int phaseid)
+	public String[] getSections()
 	{
 		if(flag==0)
-		this.getAllForms(apprempid,phaseid);
+		this.getAllForms();
 		row=rs.length;
 		col=rs[0].length;
 		String temp="";
@@ -82,7 +83,7 @@ public class AppraiseBean {
 		return section_form;
 		
 	}
-	public String[][] getAllForms(int apprempid, int phaseid)
+	public String[][] getAllForms()
 	{
 		paramSql=new String[2][2];
 		paramSql[0][0]="int";
@@ -97,5 +98,20 @@ public class AppraiseBean {
 		rs=forms;
 		flag=1;
 	}
+	public void setApprempid(int apprempid)
+	{
+		this.apprempid=apprempid;
+	}
+	public void setPhaseid(int phaseid)
+	{
+		this.phaseid=phaseid;
+	}
+	public int getApprempid() {
+		return apprempid;
+	}
+	public int getPhaseid() {
+		return phaseid;
+	}
+	
 }
 

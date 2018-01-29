@@ -16,7 +16,7 @@ public class SubordinatesBean {
 		sql="select * from view_apprreviewer where emp_number=? and phaseid=2";
 		paramSql=new String[1][2];
 		paramSql[0][0]="int";
-		paramSql[0][1]="1064";
+		paramSql[0][1]=Integer.toString(empid);
 		
 	}
 	

@@ -13,6 +13,9 @@ String name=(String) session.getAttribute("name");
 int appr_empid=(Integer)session.getAttribute("appr_empid");
 out.print("Welcome " +name+ " "+appr_empid);
 bean.setMenu(name);
+int source=1;
+
+session.setAttribute("source",1);
 %>
 
 <br>
@@ -25,7 +28,7 @@ bean.setMenu(name);
     	   if(menu1[i][0]!=null)
     	   {
     	   %>
-    		<li><a href=<%=menu1[i][1] %>><%=menu1[i][0] %></a></li>
+    		<li><a href=<%=menu1[i][1] %>><%=menu1[i][0]%></a></li>
            <%
            }
     	}%> 

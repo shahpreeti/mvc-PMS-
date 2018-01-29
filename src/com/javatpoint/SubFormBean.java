@@ -10,6 +10,7 @@ public class SubFormBean {
 	int resultCount=0,row=0,col=0,flag=0;
 	String[][] rs;
 	String[][] section_form;
+	int userid,phaseid;
 	public SubFormBean()
 	{
 		db=new DBConnection();
@@ -17,12 +18,12 @@ public class SubFormBean {
 	}
 	public void setQuery()
 	{
-		sql1="select * from view_getappraisalrecords where user_name=? and ApprEmpId=5 and phaseid=2 order by SectionColOrder, QuestionColOrder";
+		sql1="select * from view_getappraisalrecords where ApprEmpId=? and phaseid=? order by SectionColOrder, QuestionColOrder";
 }
-	public String[] getSections(String user)
+	public String[] getSections()
 	{
 		if(flag==0)
-		this.getAllForms(user);
+		this.getAllForms();
 		row=rs.length;
 		col=rs[0].length;
 		String temp="";
@@ -79,11 +80,13 @@ public class SubFormBean {
 		return section_form;
 		
 	}
-	public String[][] getAllForms(String user)
+	public String[][] getAllForms()
 	{
-		paramSql=new String[1][2];
-		paramSql[0][0]="String";
-		paramSql[0][1]=user;
+		paramSql=new String[2][2];
+		paramSql[0][0]="int";
+		paramSql[0][1]=Integer.toString(userid);
+		paramSql[1][0]="int";
+		paramSql[1][1]=Integer.toString(phaseid);
 		rs=db.getConnection(sql1, paramSql);
 		return rs;
 	}
@@ -91,6 +94,14 @@ public class SubFormBean {
 	{
 		rs=forms;
 		flag=1;
+	}
+	public void setUserid(int userid)
+	{
+		this.userid=userid;
+	}
+	public void setPhaseid(int phaseid)
+	{
+		this.phaseid=phaseid;
 	}
 }
 

@@ -34,8 +34,10 @@ public class SaveAppraiseServlet extends HttpServlet {
 		int phaseid=1;
 		AppraiseBean abean=new AppraiseBean();
 		abean.setQuery();
-		String[][] formdata=abean.getAllForms(apprempid,phaseid);
-		String[] secnames=abean.getSections(apprempid,phaseid);
+		abean.setApprempid(apprempid);
+		abean.setPhaseid(phaseid);
+		String[][] formdata=abean.getAllForms();
+		String[] secnames=abean.getSections();
 		int len=secnames.length;
 		int k=0;
 		for(int i=0;i<len;i++)

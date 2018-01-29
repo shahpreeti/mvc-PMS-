@@ -97,6 +97,7 @@ public class SaveAppraiseBean {
 			}
 			rowupdated=ob.getConnection(sql, paramSql);
 			System.out.println(rowupdated+" row");		
+			//int updatePhase=this.updatePhaseid(apprempid, ob);
 			SendMail sm=new SendMail();
 			sm.sendMail();
 		}
@@ -105,4 +106,15 @@ public class SaveAppraiseBean {
 	{
 		return count;
 	}
+	public int updatePhaseid(int apprempid,UpdateDB ob)
+	{
+		int rowupdated=0;
+		String sql="update appr_empl set curr_phase_id= curr_phase_id + 1 where ApprEmpId=?";
+		String[][] paramsql1=new String[1][2];
+		paramsql1[0][1]="int";
+		paramsql1[0][1]=Integer.toString(apprempid);
+		rowupdated=ob.getConnection(sql, paramsql1);
+		return rowupdated;
+	}
+	
 }

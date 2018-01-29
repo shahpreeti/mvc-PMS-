@@ -22,17 +22,15 @@ out.print("Welcome to self appraisal form ");
 out.print(session.getAttribute("name"));
 SaveAppraiseBean sbean=(SaveAppraiseBean)request.getAttribute("sbean");
 AppraiseBean abean=(AppraiseBean)request.getAttribute("abean");
-int apprempid=(Integer)session.getAttribute("appr_empid");
-int phaseid=1;
-String[] secname=abean.getSections(apprempid,phaseid);
-String[][] allforms=abean.getAllForms(apprempid,phaseid);
+String[] secname=abean.getSections();
+String[][] allforms=abean.getAllForms();
 int len=secname.length;
 int totalrows=allforms.length;
 int totalcols=allforms[0].length;
 int i=0,j=0,k=0;
 String status=sbean.getAppraiseStatus();
 int apprstatus=Integer.parseInt(allforms[0][8]);
-
+out.print(abean.getApprempid());
 %>
 <div><%=status %></div>
 <div class="tab">

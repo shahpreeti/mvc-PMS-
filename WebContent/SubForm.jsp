@@ -18,8 +18,10 @@
 SaveSubFormBean savesubformbean=(SaveSubFormBean)request.getAttribute("savesubformbean"); 
 String uid=(String) request.getAttribute("subname1");
 String user=session.getAttribute("name").toString();
-String[] secname=subformbean.getSections(user);
-String[][] allforms=subformbean.getAllForms(user);
+String apprempid=(String )request.getAttribute("sub_apprempid");
+out.print("showing form of "+apprempid);
+String[] secname=subformbean.getSections();
+String[][] allforms=subformbean.getAllForms();
 int len=secname.length;
 int totalrows=allforms.length;
 int totalcols=allforms[0].length;
