@@ -2,7 +2,7 @@ package com.javatpoint;
 
 
 
-public class AppraiseBean {
+public class SubFormBean {
 	DBConnection db;
 	String[][] paramSql;
 	String[] result;
@@ -10,22 +10,19 @@ public class AppraiseBean {
 	int resultCount=0,row=0,col=0,flag=0;
 	String[][] rs;
 	String[][] section_form;
-	public AppraiseBean()
+	public SubFormBean()
 	{
 		db=new DBConnection();
 		
 	}
 	public void setQuery()
 	{
-		sql1="	select * from view_getappraisalrecords where ApprEmpId=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
-
-		sql2="select * from view_getappraisalrecords where user_name=? and section=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
-
+		sql1="select * from view_getappraisalrecords where user_name=? and ApprEmpId=5 and phaseid=2 order by SectionColOrder, QuestionColOrder";
 }
-	public String[] getSections(int apprempid)
+	public String[] getSections(String user)
 	{
 		if(flag==0)
-		this.getAllForms(apprempid);
+		this.getAllForms(user);
 		row=rs.length;
 		col=rs[0].length;
 		String temp="";
@@ -82,11 +79,11 @@ public class AppraiseBean {
 		return section_form;
 		
 	}
-	public String[][] getAllForms(int apprempid)
+	public String[][] getAllForms(String user)
 	{
 		paramSql=new String[1][2];
-		paramSql[0][0]="int";
-		paramSql[0][1]=Integer.toString(apprempid);
+		paramSql[0][0]="String";
+		paramSql[0][1]=user;
 		rs=db.getConnection(sql1, paramSql);
 		return rs;
 	}
