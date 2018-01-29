@@ -82,8 +82,7 @@ public class SaveAppraiseBean {
 		{
 			int rowupdated=0;
 			System.out.println(rowsaved+" saved");
-			SendMail sm=new SendMail();
-			sm.sendMail();
+			
 			String sql="update appr_empl_flow set Status = 2 where apprEmpId= ? and phaseid=?";
 			UpdateDB ob=new UpdateDB();
 			String[][] paramSql=new String[2][2];
@@ -98,7 +97,8 @@ public class SaveAppraiseBean {
 			}
 			rowupdated=ob.getConnection(sql, paramSql);
 			System.out.println(rowupdated+" row");		
-			
+			SendMail sm=new SendMail();
+			sm.sendMail();
 		}
 	}
 	public int getCount()

@@ -31,10 +31,11 @@ public class SaveAppraiseServlet extends HttpServlet {
 		HttpSession session=request.getSession(false); 
 		String name=(String)session.getAttribute("name");  
 		int apprempid=(int) session.getAttribute("appr_empid");
+		int phaseid=1;
 		AppraiseBean abean=new AppraiseBean();
 		abean.setQuery();
-		String[][] formdata=abean.getAllForms(apprempid);
-		String[] secnames=abean.getSections(apprempid);
+		String[][] formdata=abean.getAllForms(apprempid,phaseid);
+		String[] secnames=abean.getSections(apprempid,phaseid);
 		int len=secnames.length;
 		int k=0;
 		for(int i=0;i<len;i++)
