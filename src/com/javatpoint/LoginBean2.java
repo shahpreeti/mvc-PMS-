@@ -9,7 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class LoginBean2 {  
 private String name,password;
 String[][] menu=new String[10][2];
-String  connectionUrl="jdbc:sqlserver://thirdiportal:1433;" +  
+String  connectionUrl="jdbc:sqlserver://192.168.1.67:1433;" +  
         "databaseName=HRMS;user=sa;password=Admin123";
 
      // Declare the JDBC objects.  
@@ -17,6 +17,7 @@ Connection con = null;
 PreparedStatement stmt = null;  
 ResultSet rs = null;  
 String stored_pass=null;
+int appr_empid, emp_id;
 public String getName() {  
     return name;  
 }  
@@ -30,6 +31,14 @@ public String getPassword() {
 public void setPassword(String password) {  
     this.password = password;  
 }  
+
+public int getAppr_empid() {
+	return appr_empid;
+}
+public int getEmpid() {
+	return emp_id;
+}
+
 public boolean validate(){
 	if(name.equals(""))
 	{
@@ -60,13 +69,15 @@ public void connectDB()
        con = DriverManager.getConnection(connectionUrl);  
 
        // Create and execute an SQL statement that returns some data.  
-       String SQL = "select * from ohrm_user where user_name=?";  
+       String SQL = "select * from view_userapprempid where user_name=?";  
 
        stmt=con.prepareStatement(SQL); 
        stmt.setString(1,name);  
        rs=stmt.executeQuery();
        while (rs.next()) {   
 	            stored_pass=rs.getString(5);
+	            appr_empid=rs.getInt(13);
+	            emp_id=rs.getInt(3);
 	         }    
     }
 	      // Handle any errors that may have occurred.  

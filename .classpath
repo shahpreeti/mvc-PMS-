@@ -13,7 +13,6 @@
 	<classpathentry kind="lib" path="D:/Setups/JBCryptJar/jBCrypt-0.4.1.jar"/>
 	<classpathentry kind="lib" path="D:/Setups/some-jdbc-drivers/jtds-1.3.1.jar"/>
 	<classpathentry kind="lib" path="D:/Setups/some-jdbc-drivers/sqljdbc4.jar"/>
-	<classpathentry kind="lib" path="D:/Setups/for mail/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="D:/Setups/for mail/mail-1.4.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

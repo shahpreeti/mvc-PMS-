@@ -29,7 +29,7 @@
 .formsection
 {
 	margin-left: 150px;
-    margin-right: 200px;
+    margin-right: 100px;
    	display:none;
    	border: 1px solid #ccc;
 }
@@ -50,4 +50,8 @@
 	text-align: center;
 	display:none;
 	
+}
+.indicator_row
+{
+	display:none;
 }

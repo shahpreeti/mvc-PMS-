@@ -21,7 +21,7 @@ int[][] resultCol;
 public DBConnection()
 {
 	con = null;  stmt = null;	rs = null;	stored_pass=null;
-	connectionUrl="jdbc:sqlserver://thirdiportal:1433;" +  
+	connectionUrl="jdbc:sqlserver://192.168.1.67:1433;" +  
 		        "databaseName=HRMS;user=sa;password=Admin123";
 	 
 }
@@ -115,8 +115,8 @@ public String[][] getConnection(String sql,String[][] paramSql)
 	    	   switch (caseParam)
 	    	   {
 	    	   case "String":stmt.setString(i+1,valueParam);break;
-	    	   case "int":stmt.setInt(i,Integer.parseInt(valueParam));break;
-	    	   default: stmt.setInt(i,Integer.parseInt(valueParam));break;
+	    	   case "int":stmt.setInt(i+1,Integer.parseInt(valueParam));break;
+	    	   default: stmt.setInt(i+1,Integer.parseInt(valueParam));break;
 	    	   }
 	       }
 	       rs=stmt.executeQuery(); 

@@ -22,17 +22,21 @@ public class ControllerServlet extends HttpServlet {
 		LoginBean2 bean=new LoginBean2();
 		bean.setName(name);
 		bean.setPassword(password);
+		
 		HttpSession session=request.getSession(false);  
         if(session!=null)
         {  
         	request.setAttribute("bean",bean);
-			session.setAttribute("name",name); 
+			session.setAttribute("name",name); 			
         	if(session.getAttribute("name")!=null)
         	{
 			 boolean status=bean.validate();
 			 bean.setMenu(name);
+			 int appr_empid=bean.getAppr_empid();
+			 int emp_id=bean.getEmpid();
 			 if(status){
-					
+				 	session.setAttribute("appr_empid",appr_empid); 
+				 	session.setAttribute("emp_id",emp_id); 
 			        RequestDispatcher rd=request.getRequestDispatcher("login-success.jsp");
 					rd.forward(request, response);
 					

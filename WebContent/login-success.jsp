@@ -10,7 +10,8 @@
 
 LoginBean2 bean=(LoginBean2)request.getAttribute("bean");
 String name=(String) session.getAttribute("name");
-out.print(session.getAttribute("name"));
+int appr_empid=(Integer)session.getAttribute("appr_empid");
+out.print("Welcome " +name+ " "+appr_empid);
 bean.setMenu(name);
 %>
 

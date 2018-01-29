@@ -7,7 +7,7 @@
   <%@include file="WEB-INF/styles/AppraisalTabs.css" %>
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-
+<body onload="bodyLoad()">
 <div id="div2">
 <p id="company"><a href="HomePageServlet" style="text-decoration: none; color:white">third(i)</a></p>
 <p id="slogan">Information. Intelligence. Insight.</p>
@@ -26,8 +26,10 @@ String[] secname=abean.getSections(session.getAttribute("name").toString());
 String[][] allforms=abean.getAllForms(session.getAttribute("name").toString());
 int len=secname.length;
 int totalrows=allforms.length;
+int totalcols=allforms[0].length;
 int i=0,j=0,k=0;
 String status=sbean.getAppraiseStatus();
+int apprstatus=Integer.parseInt(allforms[0][8]);
 
 %>
 <div><%=status %></div>
@@ -43,7 +45,7 @@ String status=sbean.getAppraiseStatus();
 <%for(j=0;j<len;j++)
 {
 %>
-	<div class="formsection" id="formsection<%=j%>" >
+	<div class="formsection" id="formsection<%=j%>" onload="editStatus(j)" >
 	<%
 		String[][] sectionform=abean.getForm(j);
 		int slen=sectionform.length;
@@ -53,16 +55,18 @@ String status=sbean.getAppraiseStatus();
 			%><table>
 			<%for(int t=0;t<sectionform.length;t++)
 			{
-			
+				
 				String idtext="t"+j+t;
 				String c1=sectionform[t][5];
 				String c2=sectionform[t][6];
-				String c3=sectionform[t][7];	
-				
+				String c3=sectionform[t][7];
+				String elementdisable,btndisable;
+				elementdisable = sectionform[t][8].equals("2")?"readonly":"";
+				btndisable = sectionform[t][8].equals("2")?"disabled":"";
 				%>
 				<tr>
 				<td><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label></td>
-				<td><textarea rows="4" cols="40" id="<%=idtext%>" onfocus="loadCriteria()" name="<%=idtext%>"><%=sectionform[t][3] %></textarea></td>
+				<td><textarea class="review" rows="4" cols="40" id="<%=idtext%>" <%=elementdisable%>  onfocus="loadCriteria('<%=sectionform[t][15] %>')" name="<%=idtext%>"><%=sectionform[t][3] %></textarea></td>
 			  	<td>
 			  	<%String idtb="tr"+j+t;
 			  	String ratestr;
@@ -80,23 +84,43 @@ String status=sbean.getAppraiseStatus();
 					String idrate="rate"+j+t;
 					String idbutton="b"+s+idrate;
 					%>					
-				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>,<%=idtb%>)"><img src=<%=rateimg %>></button>
+				  	<button class="ratebutton" id="<%=idbutton%>" onclick="countRate(<%=idrate%>,<%=s%>,<%=idtb%>)" <%=btndisable%>><img src=<%=rateimg %>></button>
 				<%}%>
 			  	<label id="rate<%=j%><%=t%>"><%=sectionform[t][4] %></label>
 				<input type="hidden" id="<%=idtb %>" name="<%=idtb %>" value="<%=ratestr %>" readonly>
 			  	</td></tr>
-			  	
-				<%
+			  	<%
 			}
-			%></table><%
-		}
+			%></table>
+			<table id="performanceTable">
+				<tr>
+				<td width="300"><label><b>Previous Indicator</b></label></td>
+				<td width="300"><label><b>Current Indicator</b></label></td>
+				<td width="300"><label><b>Next Indicator</b></label></td>
+				</tr>
+				<%for(int t=0;t<sectionform.length;t++)
+				{
+					String c1=sectionform[t][5];
+					String c2=sectionform[t][6];
+					String c3=sectionform[t][7];%>
+					<tr></tr>
+					<tr id="<%=sectionform[t][15]%>" class="indicator_row">
+					<td width="300"><label id=l1 class=pi><%=c1 %></label></td>
+					<td width="300"><label id=l2 class =pi><%=c2 %></label></td>
+					<td width="300"><label id=l3 class=pi><%=c3 %></label></td>
+					</tr>
+				<%}%></table>
+<%		}
 		else
 			{
 				for(int t=0;t<sectionform.length;t++)
 				{
+					String elementdisable;
+					elementdisable = sectionform[t][8].equals("2")?"readonly":"";
 					String idtext="t"+j+t;
-					%><label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label><br><br>
-			  		<textarea rows="5" cols="100" id="<%=idtext%>" name="<%=idtext%>"><%=sectionform[t][3] %></textarea>
+					%>
+					<label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label><br><br>
+			  		<textarea rows="5" cols="100" id="<%=idtext%>" name="<%=idtext%>" <%=elementdisable%> ><%=sectionform[t][3] %></textarea>
 					<br><br>
 			  	<%
 				}
@@ -107,23 +131,10 @@ String status=sbean.getAppraiseStatus();
 
 <div id ="formsections">
 </div>
-<div id="indicator">
-<table>
-<tr>
-<td><label><b>Previous Indicator</b></label></td>
-<td><label><b>Current Indicator</b></label><br></td>
-<td><label><b>Next Indicator</b></label></td>
-</tr>
-<tr>
-<td><label id=l1 class=pi></label></td>
-<td><label id=l2 class =pi></label></td>
-<td><label id=l3 class=pi></label></td>
-</tr>
-</table>
-</div>
+
 <div id="submission">
-<input type="submit" name="action" value="Save">
-<input type="submit" name="action" value="Submit">
+<input type="submit" id="savebtn" name="action" value="Save">
+<input type="submit" id="subbtn" name="action" value="Submit">
 </div>
 </form></body>
 <script type="text/javascript" >
@@ -156,7 +167,10 @@ function loadForm(section)
 	
     for(var i = 0, length = elements.length; i < length; i++) {
       if(elements[i].id==s)
-          elements[i].style.display = 'block';
+    	{
+    	  elements[i].style.display = 'block';
+    	}
+          
       else
     	  elements[i].style.display = 'none';
       
@@ -179,13 +193,29 @@ function loadForm(section)
       document.getElementById("indicator").style.display='none';
       
 }
-function loadCriteria()
+function loadCriteria(loadrow)
 {
-	var c1,c2,c3;
-	//document.getElementById("l1").innerHTML =c1;
-	//document.getElementById("l2").innerHTML =c2;
-	//document.getElementById("l3").innerHTML =c3;
-	document.getElementById("indicator").style.display='block';
+	var elements1 = document.getElementsByClassName("indicator_row");
+	for(var i = 0, length = elements1.length; i < length; i++) 
+	{
+    	if(elements1[i].id==loadrow)
+    		document.getElementById(loadrow).style.display='table-row';	
+    	else
+		document.getElementById(elements1[i].id).style.display='none';
+   		
+	}
+	
+}
+function bodyLoad() {
+	
+	 var s=<%=allforms[0][8]%>;
+    if(s==2)
+    	{
+    		var btn1 = document.getElementById("subbtn");
+    		btn1.disabled = true;
+    		btn1 = document.getElementById("savebtn");
+    		btn1.disabled = true;
+    	}
 }
 
 </script>

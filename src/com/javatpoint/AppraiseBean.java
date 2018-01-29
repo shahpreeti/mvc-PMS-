@@ -17,7 +17,7 @@ public class AppraiseBean {
 	}
 	public void setQuery()
 	{
-		sql1="select * from view_getappraisalrecords where user_name=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
+		sql1="	select * from view_getappraisalrecords where user_name=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
 
 		sql2="select * from view_getappraisalrecords where user_name=? and section=? and phaseid=1 order by SectionColOrder, QuestionColOrder";
 
