@@ -22,10 +22,8 @@ out.print("Welcome to the appraisal form ");
 out.print(session.getAttribute("name"));
 SaveAppraiseBean sbean=(SaveAppraiseBean)request.getAttribute("sbean");
 AppraiseBean abean=(AppraiseBean)request.getAttribute("abean");
-int sub_apprempid=abean.getSub_apprempid();
-if(sub_apprempid!=0)
-out.print("\n\nDisplaying form of employee "+sub_apprempid+"\n");
-else out.print("\n\nDisplaying form of employee "+abean.getApprempid());
+int apprempid=abean.getApprempid();
+out.print("\n\nDisplaying form of employee "+abean.getApprempid());
 String[] secname=abean.getSections();
 String[][] allforms=abean.getAllForms();
 int len=secname.length;
@@ -44,7 +42,7 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
   <%}%>
 
 </div>
-<form name="form1" action="SaveAppraiseServlet?sub_apprempid=<%=sub_apprempid %>" method="post">
+<form name="form1" action="SaveAppraiseServlet?sub_apprempid=<%=apprempid %>" method="post">
  <br>
 <%for(j=0;j<len;j++)
 {
@@ -61,9 +59,6 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
 			{
 				
 				String idtext="t"+j+t;
-				String c1=sectionform[t][5];
-				String c2=sectionform[t][6];
-				String c3=sectionform[t][7];
 				String elementdisable,btndisable;
 				elementdisable = sectionform[t][8].equals("2")?"readonly":"";
 				btndisable = sectionform[t][8].equals("2")?"disabled":"";

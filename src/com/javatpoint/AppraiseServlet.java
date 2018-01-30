@@ -33,32 +33,15 @@ public class AppraiseServlet extends HttpServlet {
         {  
         	if(session.getAttribute("name")!=null)
 	        {
-        		session.setAttribute("sub_apprempid","0");
 				AppraiseBean abean=new AppraiseBean();
 				SaveAppraiseBean sbean=new SaveAppraiseBean();
 				source=(int) session.getAttribute("source");
 				abean.setQuery();
 				if(source==2)
 				{
-					System.out.println("emtered in supervisor loop");
-					SubordinatesBean subbean=new SubordinatesBean();
-					int empid=(int) session.getAttribute("emp_id");
-					System.out.println(empid);
-					subbean.setParam(empid);
-					subbean.setSubordinates_list();
-					String[][] sublist=subbean.getSubordinates_list();
-					int len=sublist.length;
-					String action = request.getParameter("action");
-					for(int i=0;i<len;i++)
-					{
-					if (sublist[i][4].equals(action)) {
-						abean.setApprempid(Integer.parseInt(sublist[i][0]));
+					int id=Integer.parseInt(request.getParameter("sub_apprempid"));
+						abean.setApprempid(id);
 						abean.setPhaseid(2);
-						abean.setSub_apprempid(Integer.parseInt(sublist[i][0]));
-						System.out.println("id "+session.getAttribute("sub_apprempid"));
-						i=len;
-						} 
-					}
 				}
 				else if(source==1)
 				{

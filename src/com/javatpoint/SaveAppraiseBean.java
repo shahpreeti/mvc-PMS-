@@ -5,6 +5,7 @@ public class SaveAppraiseBean {
 	String[] sec;
 	String name;
 	int flag=0;int count=0;
+
 	public void setVal(String s)
 	{
 		selfappr[0][0]=s;
@@ -40,7 +41,7 @@ public class SaveAppraiseBean {
 		{
 		case 1: return "Form saved successfully";
 		case 2: return "Can not submit incomplete form";
-		case 3: return "Form submitted successfully and mailed to your supervisor";
+		case 3: return "Form submitted successfully and mailed for further process";
 		default: return "";
 		}
 	}
@@ -86,18 +87,22 @@ public class SaveAppraiseBean {
 			String sql="update appr_empl_flow set Status = 2 where apprEmpId= ? and phaseid=?";
 			UpdateDB ob=new UpdateDB();
 			String[][] paramSql=new String[2][2];
-			int row=selfappr.length;
-				paramSql[0][0]="int";
-				paramSql[0][1]=selfappr[0][0];
-				paramSql[1][0]="int";
-				paramSql[1][1]=selfappr[0][11];
-				
+			paramSql[0][0]="int";
+			paramSql[0][1]=selfappr[0][0];
+			paramSql[1][0]="int";
+			paramSql[1][1]=selfappr[0][11];
 			rowupdated=ob.getConnection(sql, paramSql);
-			System.out.println(rowupdated+" row");		
-			//int updatePhase=this.updatePhaseid(apprempid, ob);
-			//SendMail sm=new SendMail();
+			System.out.println(rowupdated+" row");	
+
 			MailTemplate sm=new MailTemplate();
 			sm.sendMail(Integer.parseInt(paramSql[0][1]),Integer.parseInt(paramSql[1][1]));
+			
+			sql="update appr_empl set curr_phase_id= curr_phase_id + 1 where ApprEmpId=?";
+			paramSql=new String[1][2];
+			paramSql[0][0]="int";
+			paramSql[0][1]=selfappr[0][0];
+			rowupdated=ob.getConnection(sql, paramSql);
+			System.out.println(rowupdated+" phase updated");
 		}
 	}
 	public int getCount()

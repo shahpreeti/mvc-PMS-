@@ -9,7 +9,7 @@ public class AppraiseBean {
 	int resultCount=0,row=0,col=0,flag=0;
 	String[][] rs;
 	String[][] section_form;
-	int apprempid,phaseid,sub_apprempid=0;
+	int apprempid,phaseid;
 	public AppraiseBean()
 	{
 		db=new DBConnection();
@@ -110,12 +110,6 @@ public class AppraiseBean {
 	}
 	public int getPhaseid() {
 		return phaseid;
-	}
-	public int getSub_apprempid() {
-		return sub_apprempid;
-	}
-	public void setSub_apprempid(int sub_apprempid) {
-		this.sub_apprempid = sub_apprempid;
 	}
 	public String getEmp_name() {
 		return emp_name;

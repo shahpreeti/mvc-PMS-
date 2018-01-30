@@ -15,29 +15,41 @@ int source=2;
 session.setAttribute("source",2);
 int len=sub_list.length;
 %>
-
-<div id="sublist">
+<div id="sub_list">
 <table>
+<tr>
+		<th>Sno.</th>
+		<th>Appr_empid</th>
+		<th>Emp_id</th>
+		<th>Designation</th>
+		<th>Current_phase</th>
+		<th>link</th>
+	</tr>
 <%
-
 for(int i=0;i<len;i++)
   {
-	String id=sub_list[i][0];
-  %><tr>
-	<td ><%=id %></td>
+	int current_phase=Integer.parseInt(sub_list[i][2]);
+	int phase=Integer.parseInt(sub_list[i][1]);
 	
-	<td><input type="submit" id="<%=id%>>" name="action" value="<%=sub_list[i][4]%>"></td>
-	</tr>
-  <%} %>
-
+	String link=current_phase>=phase?"":"";
+	%>
+	<tr>
+	<td><%=i+1 %></td>
+	<td><%=sub_list[i][0]%></td>
+	<td><%=sub_list[i][4]%></td>
+	<td>..</td>
+	<td><%=sub_list[i][2]%></td>
+	<%if (current_phase>=phase) {current_phase=current_phase;%>
+	<td><a href="AppraiseServlet?sub_apprempid=<%=sub_list[i][0]%>">Edit</a></td>
+	<%} else {%>
+	<td>Edit</td> <%current_phase=current_phase;} %>
+	</tr>	
+	<%
+  }%>
 </table>
 </div>
-<div>
-<br>
-<p id="test">
-<%out.print("apprempid is  "+session.getAttribute("sub_apprempid")); %>
-</p>
-</div>
+
+
 </form>
 <script>
 function openForm(emp)
