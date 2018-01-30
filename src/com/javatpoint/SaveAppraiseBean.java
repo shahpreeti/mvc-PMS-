@@ -87,19 +87,17 @@ public class SaveAppraiseBean {
 			UpdateDB ob=new UpdateDB();
 			String[][] paramSql=new String[2][2];
 			int row=selfappr.length;
-			for(int i=0;i<row;i++)
-			{
 				paramSql[0][0]="int";
-				paramSql[0][1]=selfappr[i][0];
+				paramSql[0][1]=selfappr[0][0];
 				paramSql[1][0]="int";
-				paramSql[1][1]=selfappr[i][11];
+				paramSql[1][1]=selfappr[0][11];
 				
-			}
 			rowupdated=ob.getConnection(sql, paramSql);
 			System.out.println(rowupdated+" row");		
 			//int updatePhase=this.updatePhaseid(apprempid, ob);
-			SendMail sm=new SendMail();
-			sm.sendMail();
+			//SendMail sm=new SendMail();
+			MailTemplate sm=new MailTemplate();
+			sm.sendMail(Integer.parseInt(paramSql[0][1]),Integer.parseInt(paramSql[1][1]));
 		}
 	}
 	public int getCount()

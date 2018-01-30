@@ -27,15 +27,38 @@ public class SaveAppraiseServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		SaveAppraiseBean sbean=new SaveAppraiseBean();
-		String action = request.getParameter("action");
-		HttpSession session=request.getSession(false); 
-		String name=(String)session.getAttribute("name");  
-		int apprempid=(int) session.getAttribute("appr_empid");
-		int phaseid=1;
 		AppraiseBean abean=new AppraiseBean();
+		HttpSession session=request.getSession(false); 
+		int source=(int)session.getAttribute("source"); 
+		String action = request.getParameter("action");
+		int empid,apprempid;
+		if(source==1)
+		{
+			apprempid=(int) session.getAttribute("appr_empid");
+			abean.setApprempid(apprempid);
+			abean.setPhaseid(1);
+		}
+		if(source==2)
+		{
+			System.out.println("emtered in supervisor loop");
+			SubordinatesBean subbean=new SubordinatesBean();
+			empid=(int) session.getAttribute("emp_id");
+			System.out.println(empid);
+			subbean.setParam(empid);
+			subbean.setSubordinates_list();
+			String[][] sublist=subbean.getSubordinates_list();
+			int len=sublist.length;
+			
+			for(int i=0;i<len;i++)
+			{
+			if (sublist[i][4].equals(action)) {
+				abean.setApprempid(Integer.parseInt(sublist[i][0]));
+				abean.setPhaseid(2);
+				i=len;
+				} 
+			}
+		}
 		abean.setQuery();
-		abean.setApprempid(apprempid);
-		abean.setPhaseid(phaseid);
 		String[][] formdata=abean.getAllForms();
 		String[] secnames=abean.getSections();
 		int len=secnames.length;

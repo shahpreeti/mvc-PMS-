@@ -1,7 +1,5 @@
 package com.javatpoint;
 
-
-
 public class AppraiseBean {
 	DBConnection db;
 	String[][] paramSql;
