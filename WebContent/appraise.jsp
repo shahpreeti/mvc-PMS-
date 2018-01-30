@@ -18,10 +18,14 @@
 </div>
 
 <%
-out.print("Welcome to self appraisal form ");
+out.print("Welcome to the appraisal form ");
 out.print(session.getAttribute("name"));
 SaveAppraiseBean sbean=(SaveAppraiseBean)request.getAttribute("sbean");
 AppraiseBean abean=(AppraiseBean)request.getAttribute("abean");
+int sub_apprempid=abean.getSub_apprempid();
+if(sub_apprempid!=0)
+out.print("\n\nDisplaying form of employee "+sub_apprempid+"\n");
+else out.print("\n\nDisplaying form of employee "+abean.getApprempid());
 String[] secname=abean.getSections();
 String[][] allforms=abean.getAllForms();
 int len=secname.length;
@@ -30,7 +34,7 @@ int totalcols=allforms[0].length;
 int i=0,j=0,k=0;
 String status=sbean.getAppraiseStatus();
 int apprstatus=Integer.parseInt(allforms[0][8]);
-out.print(abean.getApprempid());
+
 %>
 <div><%=status %></div>
 <div class="tab">
@@ -40,7 +44,7 @@ out.print(abean.getApprempid());
   <%}%>
 
 </div>
-<form name="form1" action="SaveAppraiseServlet" method="post">
+<form name="form1" action="SaveAppraiseServlet?sub_apprempid=<%=sub_apprempid %>" method="post">
  <br>
 <%for(j=0;j<len;j++)
 {

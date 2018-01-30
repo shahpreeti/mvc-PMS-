@@ -1,6 +1,7 @@
 package com.javatpoint;
 
 public class AppraiseBean {
+	String emp_name;
 	DBConnection db;
 	String[][] paramSql;
 	String[] result;
@@ -8,7 +9,7 @@ public class AppraiseBean {
 	int resultCount=0,row=0,col=0,flag=0;
 	String[][] rs;
 	String[][] section_form;
-	int apprempid,phaseid;
+	int apprempid,phaseid,sub_apprempid=0;
 	public AppraiseBean()
 	{
 		db=new DBConnection();
@@ -109,6 +110,18 @@ public class AppraiseBean {
 	}
 	public int getPhaseid() {
 		return phaseid;
+	}
+	public int getSub_apprempid() {
+		return sub_apprempid;
+	}
+	public void setSub_apprempid(int sub_apprempid) {
+		this.sub_apprempid = sub_apprempid;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
 	
 }
