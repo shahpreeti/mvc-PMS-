@@ -139,7 +139,7 @@ String[] secname2=abean2.getSections();
 					%>
 					<label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label><br><br>
 			  		<textarea rows="5" cols="100" id="<%=idtext%>" name="<%=idtext%>" <%=elementdisable%> ><%=sectionform[t][3] %></textarea>
-					<%if(source==1){%><%}else{%>
+					<%if(source==1){%><br><br><%}else{%>
 					<button type="button" onclick="loadSelfForm2('self<%=sectionform2[t][2]%>')" class="loadselfdata"><img src="scroll_button_down_up.png"></button>
 					<br><label id="self<%=sectionform2[t][2]%>" class="selfdata"><%=sectionform2[t][3] %></label>
 					<br><br>
