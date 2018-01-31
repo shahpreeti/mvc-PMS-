@@ -33,9 +33,13 @@ int totalcols=allforms[0].length;
 int i=0,j=0,k=0;
 String status=sbean.getAppraiseStatus();
 int apprstatus=Integer.parseInt(allforms[0][8]);
+Integer source=(Integer) session.getAttribute("source");
+if(source==1){}
+else
+{
 String[][] allforms1=abean2.getAllForms();
 String[] secname2=abean2.getSections();
-
+}
 %>
 <div><%=status %></div>
 <div class="tab">
@@ -53,7 +57,10 @@ String[] secname2=abean2.getSections();
 	<div class="formsection" id="formsection<%=j%>" onload="editStatus(j)" >
 	<%
 		String[][] sectionform=abean.getForm(j);
-		String[][] sectionform2=abean2.getForm(j);
+		String[][] sectionform2=abean.getForm(j);
+		if(source==1){}
+		else{
+			sectionform2=abean2.getForm(j);}
 		int slen=sectionform.length;
 		%><label>displaying section<%=j+1 %></label><br><%
 		if(sectionform[0][9].equals("Y"))
@@ -92,14 +99,14 @@ String[] secname2=abean2.getSections();
 				<%}%>
 			  	<label id="rate<%=j%><%=t%>"><%=sectionform[t][4] %></label>
 				<input type="hidden" id="<%=idtb %>" name="<%=idtb %>" value="<%=ratestr %>" readonly>
-			  	</td>
-			  	<td><button type="button" onclick="loadSelfForm('self<%=sectionform2[t][2]%>')"><img src="scroll_button_down_up.png"></button></td></tr>
+			  	</td><%if(source==1){%></tr><%}else{%>
+			  	<td><button type="button" onclick="loadSelfForm('self<%=sectionform2[t][2]%>')" class="loadselfdata"><img src="scroll_button_down_up.png"></button></td></tr>
 			  	<tr id="self<%=sectionform2[t][2]%>" class="selfdata">
 			  	<td ></td>
 			  	<td ><label ><%=sectionform2[t][3] %></label></td>
 			  	<td ><label><%=sectionform2[t][4] %> star</label></td>
 			  	</tr>
-			  	<%
+			  	<%}
 			}
 			%></table>
 			<table id="performanceTable">
@@ -119,6 +126,7 @@ String[] secname2=abean2.getSections();
 					<td width="300"><label id=l2 class =pi><%=c2 %></label></td>
 					<td width="300"><label id=l3 class=pi><%=c3 %></label></td>
 					</tr>
+					
 				<%}%></table>
 <%		}
 		else
@@ -131,8 +139,12 @@ String[] secname2=abean2.getSections();
 					%>
 					<label id="<%=sectionform[t][2]%>" ><%=sectionform[t][2] %></label><br><br>
 			  		<textarea rows="5" cols="100" id="<%=idtext%>" name="<%=idtext%>" <%=elementdisable%> ><%=sectionform[t][3] %></textarea>
+					<%if(source==1){%><%}else{%>
+					<button type="button" onclick="loadSelfForm2('self<%=sectionform2[t][2]%>')" class="loadselfdata"><img src="scroll_button_down_up.png"></button>
+					<br><label id="self<%=sectionform2[t][2]%>" class="selfdata"><%=sectionform2[t][3] %></label>
 					<br><br>
 			  	<%
+					}
 				}
 			}
 		%>
@@ -140,7 +152,7 @@ String[] secname2=abean2.getSections();
 <%} %>
 
 <div id ="formsections">
-<p>helllo</p>
+
 </div>
 
 <div id="submission">
@@ -225,8 +237,17 @@ function loadSelfForm(row_id)
     		document.getElementById(row_id).style.display='table-row';
    		
 }
+function loadSelfForm2(row_id)
+{
+	var ans=document.getElementById(row_id).style.display==='block';
+    	if(ans)
+    		document.getElementById(row_id).style.display='none';	
+    	else
+    		document.getElementById(row_id).style.display='block';
+   		
+}
 function bodyLoad() {
-	
+
 	 var s=<%=allforms[0][8]%>;
     if(s==2)
     	{
@@ -234,6 +255,14 @@ function bodyLoad() {
     		btn1.disabled = true;
     		btn1 = document.getElementById("savebtn");
     		btn1.disabled = true;
+    	}
+    if(<%=source%>==1)
+    	{
+		    var elements1 = document.getElementsByClassName("loadselfdata");
+			for(var i = 0, length = elements1.length; i < length; i++) 
+			{
+				document.getElementById(elements1[i].id).style.display='none';	
+			}
     	}
 }
 
