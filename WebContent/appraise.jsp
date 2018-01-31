@@ -22,6 +22,7 @@ out.print("Welcome to the appraisal form ");
 out.print(session.getAttribute("name"));
 SaveAppraiseBean sbean=(SaveAppraiseBean)request.getAttribute("sbean");
 AppraiseBean abean=(AppraiseBean)request.getAttribute("abean");
+AppraiseBean abean2=(AppraiseBean)request.getAttribute("abean2");
 int apprempid=abean.getApprempid();
 out.print("\n\nDisplaying form of employee "+abean.getApprempid());
 String[] secname=abean.getSections();
@@ -32,6 +33,8 @@ int totalcols=allforms[0].length;
 int i=0,j=0,k=0;
 String status=sbean.getAppraiseStatus();
 int apprstatus=Integer.parseInt(allforms[0][8]);
+String[][] allforms1=abean2.getAllForms();
+String[] secname2=abean2.getSections();
 
 %>
 <div><%=status %></div>
@@ -50,6 +53,7 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
 	<div class="formsection" id="formsection<%=j%>" onload="editStatus(j)" >
 	<%
 		String[][] sectionform=abean.getForm(j);
+		String[][] sectionform2=abean2.getForm(j);
 		int slen=sectionform.length;
 		%><label>displaying section<%=j+1 %></label><br><%
 		if(sectionform[0][9].equals("Y"))
@@ -78,8 +82,9 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
 				{ 
 			  		String rateimg;
 			  		if(rating>=s)
-			  		rateimg="star.png";
-			  		else rateimg="starUnfilled.png";
+			  			rateimg="star.png";
+			  		else 
+			  			rateimg="starUnfilled.png";
 					String idrate="rate"+j+t;
 					String idbutton="b"+s+idrate;
 					%>					
@@ -87,7 +92,13 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
 				<%}%>
 			  	<label id="rate<%=j%><%=t%>"><%=sectionform[t][4] %></label>
 				<input type="hidden" id="<%=idtb %>" name="<%=idtb %>" value="<%=ratestr %>" readonly>
-			  	</td></tr>
+			  	</td>
+			  	<td><button type="button" onclick="loadSelfForm('self<%=sectionform2[t][2]%>')"><img src="scroll_button_down_up.png"></button></td></tr>
+			  	<tr id="self<%=sectionform2[t][2]%>" class="selfdata">
+			  	<td ></td>
+			  	<td ><label ><%=sectionform2[t][3] %></label></td>
+			  	<td ><label><%=sectionform2[t][4] %> star</label></td>
+			  	</tr>
 			  	<%
 			}
 			%></table>
@@ -129,6 +140,7 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
 <%} %>
 
 <div id ="formsections">
+<p>helllo</p>
 </div>
 
 <div id="submission">
@@ -138,7 +150,6 @@ int apprstatus=Integer.parseInt(allforms[0][8]);
 </form></body>
 <script type="text/javascript" >
 document.getElementById("Section Name0").style.backgroundColor = "#ddd";
-
 function countRate(r_id,star,trid)
 {
 	
@@ -204,6 +215,15 @@ function loadCriteria(loadrow)
    		
 	}
 	
+}
+function loadSelfForm(row_id)
+{
+	var ans=document.getElementById(row_id).style.display==='table-row';
+    	if(ans)
+    		document.getElementById(row_id).style.display='none';	
+    	else
+    		document.getElementById(row_id).style.display='table-row';
+   		
 }
 function bodyLoad() {
 	
